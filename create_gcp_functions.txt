@@ -1,0 +1,15 @@
+
+  gcloud functions deploy get_secret \
+  --runtime python310 \
+  --trigger-http \
+  --entry-point get_secret \
+  --memory 256MB \
+  --timeout 60s
+
+
+  gcloud functions deploy get_secret \
+  --runtime python310 \
+  --trigger-http \
+  --entry-point get_secret \
+  --memory 256MB \
+  --timeout 60s
