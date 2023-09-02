@@ -1,15 +1,35 @@
-
-  gcloud functions deploy get_secret \
+  gcloud functions deploy extract_api_load_storage \
   --runtime python310 \
   --trigger-http \
-  --entry-point get_secret \
+  --entry-point caller \
   --memory 256MB \
-  --timeout 60s
+  --timeout 540s
+
+  gcloud scheduler jobs create http extract_api_load_storage \
+  --schedule="*/15 * * * *" \
+  --uri="https://us-central1-cadastrachallenge.cloudfunctions.net/extract_api_load_storage" \
+  --http-method=GET \
+  --location=us-central1
 
 
-  gcloud functions deploy get_secret \
+  gcloud scheduler jobs list \
+  --location=us-central1
+
+  gcloud scheduler jobs run extract_api_load_storage \
+  --location=us-central1
+
+  gcloud functions deploy tranform_into_bigquery \
+  --runtime python310 \
+  --trigger-resource "crypto-cap-market" \
+  --trigger-event google.storage.object.finalize \
+  --entry-point transformer \
+  --allow-unauthenticated \
+  --memory 256MB \
+  --timeout 540s
+
+  gcloud functions deploy create_bq_tables \
   --runtime python310 \
   --trigger-http \
-  --entry-point get_secret \
+  --entry-point create_tables \
   --memory 256MB \
-  --timeout 60s
+  --timeout 540s
