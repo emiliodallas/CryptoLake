@@ -3,10 +3,10 @@
 Teste Técnico Cadastra para vaga de Engenheiro de Dados GCP Pleno.
 O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API do site CoinMarketCap e armazená-los em uma tabela de dados para cada moeda no BigQuery.
 - [ETL](#etl)
-- [Documentação API](#documentation)
-- [Armazenamento e Modelagem de Dados](#data)
-- [Cloud Functions](#functions)
-- [Pré-Requisitos](#requirements)
+- [Documentação](#documentation)
+- [Dados](#data)
+- [CloudFunctions](#functions)
+- [Requisitos](#requirements)
 
   ## ETL
   A ETL segue o seguinte diagrama:
