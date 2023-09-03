@@ -13,7 +13,7 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
   
     ![Diagram](https://github.com/emiliodallas/CryptoLake/blob/master/ETL_diagram.png)
      
-  ## Documentação da API
+  ## Documentação
   O limite de requests para a API com uma conta no plano Basic (gratuito) é de 10.000 coins/mês. Cada coin equivale à um request GET, por exemplo. Por essa limitação, escolhi coletar os dados de três criptomoedas:
     1. Bitcoin
     2. Ethereum
@@ -40,6 +40,13 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
         - Tether/
           - ...
    Cada arquivo recebe o nome no formato ```data_YYYY_MM_DD-HH-MM-SS.json``` para que todos tenham nomes únicos e que sejam facilmente acessados. Isso vale tanto para os dados na pasta _bronze_ quanto na pasta _silver_
+  No BigQuery, os dados que compõem a tabela escolhidos, foram:
+    1. Quantidade em Circulação.
+    2. Preço.
+    3. Variação do volume nas últimas 24h.
+    4. Variação percentual na última hora.
+    5. Market Cap.
+    6. Market Cap diluído no total em circulação.
 
   ## CloudFunctions
   O código foi construiso em Python e roda no GCP Cloud Functions. A chave da api é passada como variável de ambiente da própria função. Este respositório está configurado para que seja possivel implementar com facilidade essas funções em qualquer conta GCP. Para isso é necessário possuir o SDK da GCP instalado e configurado.
