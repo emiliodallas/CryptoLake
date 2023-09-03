@@ -39,7 +39,9 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
           - ...
         - Tether/
           - ...
-   Cada arquivo recebe o nome no formato ```data_YYYY_MM_DD-HH-MM-SS.json``` para que todos tenham nomes únicos e que sejam facilmente acessados. Isso vale tanto para os dados na pasta _bronze_ quanto na pasta _silver_
+   
+
+  Cada arquivo recebe o nome no formato ```data_YYYY_MM_DD-HH-MM-SS.json``` para que todos tenham nomes únicos e que sejam facilmente acessados. Isso vale tanto para os dados na pasta _bronze_ quanto na pasta _silver_
   No BigQuery, os dados que compõem a tabela escolhidos, foram:
     1. Quantidade em Circulação.
     2. Preço.
