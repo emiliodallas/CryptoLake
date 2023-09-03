@@ -15,6 +15,7 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
      
   ## Documentação
   O limite de requests para a API com uma conta no plano Basic (gratuito) é de 10.000 coins/mês. Cada coin equivale à um request GET, por exemplo. Por essa limitação, escolhi coletar os dados de três criptomoedas:
+  
     1. Bitcoin
     2. Ethereum
     3. Tether
@@ -41,7 +42,8 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
           - ...
    
 
-  Cada arquivo recebe o nome no formato ```data_YYYY_MM_DD-HH-MM-SS.json``` para que todos tenham nomes únicos e que sejam facilmente acessados. Isso vale tanto para os dados na pasta _bronze_ quanto na pasta _silver_
+  Cada arquivo recebe o nome no formato ```data_YYYY_MM_DD-HH-MM-SS.json``` para que todos tenham nomes únicos e que sejam facilmente acessados. Isso vale tanto para os dados na pasta _bronze_ quanto na pasta _silver_.
+
   No BigQuery, os dados que compõem a tabela escolhidos, foram:
     1. Quantidade em Circulação.
     2. Preço.
@@ -52,15 +54,17 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
 
   ## CloudFunctions
   O código foi construiso em Python e roda no GCP Cloud Functions. A chave da api é passada como variável de ambiente da própria função. Este respositório está configurado para que seja possivel implementar com facilidade essas funções em qualquer conta GCP. Para isso é necessário possuir o SDK da GCP instalado e configurado.
+  
   Foram criadas duas funções:
-  1. A primeira roda através de um _trigger_ por tempo, a cada 15 minutos. Essa função é responsável por se comunicar com a API e salvar os dados brutos na primeira etapa dentro do bucket. Para rodar o código no GCP é necessário criar o _scheduler_ com o comando que está no arquivo ```create_gcp_functions.txt```. Feito isso, basta aceder ao diretório ```extract_to_storage``` e rodar o comando de criação da função ```extract_api_load_storage```. Com ela criada, basta criar a variável de ambiente desta função.
-  2. A segunda roda a partir da criação de um novo objeto no bucket. Assim que a primeira função cria o arquivo .json, esta função é iniciada. Ela usa esse mesmo arquivo que serviu de _trigger_ e faz o tratamento do mesmo, salvando-o na pasta _silver_. Esse novo arquivo salvo irá acionar essa função novamente, porém, vai utilizar esse arquivo de _trigger_ para incluir esses novos dados tratados na tabela do BigQuery. Para implementar a função, o procedimento é o mesmo da primeira: aceder ao diretório ```transform_into_bigquery``` e rodar o comando onde o nome da função é ```tranform_into_bigquery```. Essa função não tem variáveis de ambiente para serem configuradas.
+    1. A primeira roda através de um _trigger_ por tempo, a cada 15 minutos. Essa função é responsável por se comunicar com a API e salvar os dados brutos na primeira etapa dentro do bucket. Para rodar o código no GCP é necessário criar o _scheduler_ com o comando que está no arquivo ```create_gcp_functions.txt```. Feito isso, basta aceder ao diretório ```extract_to_storage``` e rodar o comando de criação da função ```extract_api_load_storage```. Com ela criada, basta criar a variável de ambiente desta função.
+    2. A segunda roda a partir da criação de um novo objeto no bucket. Assim que a primeira função cria o arquivo .json, esta função é iniciada. Ela usa esse mesmo arquivo que serviu de _trigger_ e faz o tratamento do mesmo, salvando-o na pasta _silver_. Esse novo arquivo salvo irá acionar essa função novamente, porém, vai utilizar esse arquivo de _trigger_ para incluir esses novos dados tratados na tabela do BigQuery. Para implementar a função, o procedimento é o mesmo da primeira: aceder ao diretório ```transform_into_bigquery``` e rodar o comando onde o nome da função é ```tranform_into_bigquery```. Essa função não tem variáveis de ambiente para serem configuradas.
  
   ## Requisitos
   Para que seja possível rodar a função em outo GCP, é necessário criar um bucket e alterar alguns parâmetros em ambas funções:
-  1. Na função que o Cloud Functions utiliza como endpoint é necessário alterar:
-    a. Nome do bucket.
-    b. Nome do projeto.
-    c. Nome do dataset.
-    d. Nome da chave API.
+    1. Na função que o Cloud Functions utiliza como endpoint é necessário alterar:
+      a. Nome do bucket.
+      b. Nome do projeto.
+      c. Nome do dataset.
+      d. Nome da chave API.
+
   Com isso, as funções devem rodar normalmente. 
