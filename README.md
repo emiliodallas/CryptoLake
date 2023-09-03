@@ -24,7 +24,7 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
   Como mencionado, a conexão com a API é feita por requests GET HTTP para obter dados em formato JSON sobre as moedas.
 
   ## Dados
-  Os dados, segregados em _bronze_ e _silver_ (conforme tratamento) foram armazenados num bucket no Cloud Storage. Os dados _silver_ são, então, carregados para o BigQuery devidamente tratados e organizados em suas tabelas. A estrutura dos diretórios dentro do bucket é:
+  Os dados, segregados em _bronze_ e _silver_ (conforme tratamento) foram armazenados num bucket no Cloud Storage. Os dados devidamente tratados armazenados em _silver_ são, então, carregados organizadamente para o BigQuery em suas respectivas tabelas. A estrutura dos diretórios dentro do bucket é:
     - crypto-cap-market/
       - bronze/
         - Bitcoin/
@@ -53,7 +53,7 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
     6. Market Cap diluído no total em circulação.
 
   ## CloudFunctions
-  O código foi construiso em Python e roda no GCP Cloud Functions. A chave da api é passada como variável de ambiente da própria função. Este respositório está configurado para que seja possivel implementar com facilidade essas funções em qualquer conta GCP. Para isso é necessário possuir o SDK da GCP instalado e configurado.
+  O código foi construido em Python e roda no GCP Cloud Functions. A chave da api é passada como variável de ambiente da própria função. Este respositório está configurado para que seja possivel implementar com facilidade essas funções em qualquer conta GCP. Para isso é necessário possuir o SDK da GCP instalado e configurado.
   
   Foram criadas duas funções:
     1. A primeira roda através de um _trigger_ por tempo, a cada 15 minutos. Essa função é responsável por se comunicar com a API e salvar os dados brutos na primeira etapa dentro do bucket. Para rodar o código no GCP é necessário criar o _scheduler_ com o comando que está no arquivo ```create_gcp_functions.txt```. Feito isso, basta aceder ao diretório ```extract_to_storage``` e rodar o comando de criação da função ```extract_api_load_storage```. Com ela criada, basta criar a variável de ambiente desta função.
@@ -86,10 +86,10 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
  
   ## Requisitos
   Para que seja possível rodar a função em outo GCP, é necessário criar um bucket e alterar alguns parâmetros em ambas funções:
-    1. Na função que o Cloud Functions utiliza como endpoint é necessário alterar:       
+    1. No arquivo ```main.py``` é necessário passar os seguintes parametros para a funcao:
         1. Nome do bucket.
         2. Nome do projeto.
-        3. Nome do dataset.
-        4. Nome da chave API.
+        3. Nome do dataset (apenas funcao para BigQuery)
+        4. Nome da chave API (apenas funcao que extrai da API)
 
   Com isso, as funções devem rodar normalmente. 

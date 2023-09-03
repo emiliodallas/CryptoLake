@@ -32,8 +32,8 @@ class CryptomarketPipeline():
         return response.json()
 
     def store_data_in_cloud_storage(self, data, coin_name, data_stage):
-        '''Store data in Cloud Storage'''
-        client, bucket =  authenticate_cloud_storage(self.project_id, self.bucket_name)
+        client, bucket =  authenticate_cloud_storage(self.project_id,
+                                                     self.bucket_name)
 
         folder = f'{data_stage}/{coin_name}'
         current_datetime = get_current_time()
