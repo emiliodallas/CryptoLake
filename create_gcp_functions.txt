@@ -1,35 +1,37 @@
-  gcloud functions deploy extract_api_load_storage \
+// Utilize esse comando para fazer deploy da primeira função
+// queextrai dados da API e então os carrega no Cloud Stograge
+gcloud functions deploy extract_api_load_storage \
   --runtime python310 \
   --trigger-http \
   --entry-point caller \
   --memory 256MB \
   --timeout 540s
 
+// Use esse comando para fazer deploy do scheduler de
+// 15 em 15 minutos chamar a função acima
   gcloud scheduler jobs create http extract_api_load_storage \
   --schedule="*/15 * * * *" \
   --uri="https://us-central1-cadastrachallenge.cloudfunctions.net/extract_api_load_storage" \
   --http-method=GET \
   --location=us-central1
 
-
+// Utilize esse comando para verificar se o job de 
+// schedule foi criado corretamente
   gcloud scheduler jobs list \
   --location=us-central1
 
+// Utilize esse comando para executar o scheduler
+// criado acima
   gcloud scheduler jobs run extract_api_load_storage \
   --location=us-central1
 
+// Utilize esse comando para criar a função que
+// trata os dados e os insere no BigQuery
   gcloud functions deploy tranform_into_bigquery \
   --runtime python310 \
   --trigger-resource "crypto-cap-market" \
   --trigger-event google.storage.object.finalize \
   --entry-point transformer \
   --allow-unauthenticated \
-  --memory 256MB \
-  --timeout 540s
-
-  gcloud functions deploy create_bq_tables \
-  --runtime python310 \
-  --trigger-http \
-  --entry-point create_tables \
   --memory 256MB \
   --timeout 540s
