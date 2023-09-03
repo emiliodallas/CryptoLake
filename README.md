@@ -63,31 +63,26 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
     1. Ter Python 3.10 instalado.
     2. Ter pip 23.2.1 instalado.
     3. Editar a função main.py dentro do diretório na criação da instância da classe ```CryptoMarketTables``` com os devidos parâmetros de projeto e dataset.
-    4. Instalar a biblioteca ```virtualenv```:
-
-        ´´´
-        pip3 install virtualenv
-        ´´´
-    5. Rodar o comando:
-
-        ´´´
+    4. Instalar a biblioteca ```virtualenv```:   
+          ```        
+          pip3 install virtualenv
+          ```        
+    5. Rodar o comando:          
+        ```          
         python3.10 -m venv .venv
-        ´´´
+        ```         
     6. Entrar no ambiente virtual com:
-
-        ´´´
+        ```        
         source .venv/bin/activate
-        ´´´
-    8. Instalar os requisitos com:
-
-        ´´´
+        ```      
+    7. Instalar os requisitos com:
+        ```        
         pip3 install -r requirements.txt
-        ´´´
-    9. Finalmente, rodar a função com:
-
-        ´´´
+        ```
+    8. Finalmente, rodar a função com:
+        ```        
         python3.10 main.py
-        ´´´
+        ```
  
   ## Requisitos
   Para que seja possível rodar a função em outo GCP, é necessário criar um bucket e alterar alguns parâmetros em ambas funções:
