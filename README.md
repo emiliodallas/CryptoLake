@@ -61,11 +61,10 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
  
   ## Requisitos
   Para que seja possível rodar a função em outo GCP, é necessário criar um bucket e alterar alguns parâmetros em ambas funções:
-    1. Na função que o Cloud Functions utiliza como endpoint é necessário alterar:
-       
-      a. Nome do bucket.
-      b. Nome do projeto.
-      c. Nome do dataset.
-      d. Nome da chave API.
+    1. Na função que o Cloud Functions utiliza como endpoint é necessário alterar:       
+        1. Nome do bucket.
+        2. Nome do projeto.
+        3. Nome do dataset.
+        4. Nome da chave API.
 
   Com isso, as funções devem rodar normalmente. 
