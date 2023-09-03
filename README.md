@@ -86,10 +86,10 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
  
   ## Requisitos
   Para que seja possível rodar a função em outo GCP, é necessário criar um bucket e alterar alguns parâmetros em ambas funções:
-    1. No arquivo ```main.py``` é necessário passar os seguintes parametros para a funcao:
+    1. No arquivo ```main.py``` é necessário passar os seguintes parâmetros para a função:
         1. Nome do bucket.
         2. Nome do projeto.
-        3. Nome do dataset (apenas funcao para BigQuery)
-        4. Nome da chave API (apenas funcao que extrai da API)
+        3. Nome do dataset (apenas função para BigQuery)
+        4. Nome da chave API (apenas função que extrai da API)
 
   Com isso, as funções devem rodar normalmente. 
