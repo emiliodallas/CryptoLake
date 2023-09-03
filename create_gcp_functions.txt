@@ -11,7 +11,7 @@ gcloud functions deploy extract_api_load_storage \
 // Atualize o campo 'SUA_CHAVE_API' com sua chave
   gcloud functions deploy extract_api_load_storage \
   --runtime python310 \
-  --set-secrets 'criptomarket_api_key=SUA_CHAVE_API'
+  --set-secrets 'criptomarket_api_key=SUA_CHAVE_API:latest'
 
 // Use esse comando para fazer deploy do scheduler de
 // 15 em 15 minutos chamar a função acima
