@@ -1,6 +1,5 @@
 // Utilize esse comando para fazer deploy da primeira função
 // queextrai dados da API e então os carrega no Cloud Stograge
-
 gcloud functions deploy extract_api_load_storage \
   --runtime python310 \
   --trigger-http \
@@ -8,9 +7,14 @@ gcloud functions deploy extract_api_load_storage \
   --memory 256MB \
   --timeout 540s
 
+// Use esse comando para criar o secret da Cloud Function
+// Atualize o campo 'SUA_CHAVE_API' com sua chave
+  gcloud functions deploy extract_api_load_storage \
+  --runtime python310 \
+  --set-secrets 'criptomarket_api_key=SUA_CHAVE_API'
+
 // Use esse comando para fazer deploy do scheduler de
 // 15 em 15 minutos chamar a função acima
-
   gcloud scheduler jobs create http extract_api_load_storage \
   --schedule="*/15 * * * *" \
   --uri="https://us-central1-cadastrachallenge.cloudfunctions.net/extract_api_load_storage" \
@@ -19,19 +23,16 @@ gcloud functions deploy extract_api_load_storage \
 
 // Utilize esse comando para verificar se o job de 
 // schedule foi criado corretamente
-
   gcloud scheduler jobs list \
   --location=us-central1
 
 // Utilize esse comando para executar o scheduler
 // criado acima
-
   gcloud scheduler jobs run extract_api_load_storage \
   --location=us-central1
 
 // Utilize esse comando para criar a função que
 // trata os dados e os insere no BigQuery
-
   gcloud functions deploy tranform_into_bigquery \
   --runtime python310 \
   --trigger-resource "crypto-cap-market" \
