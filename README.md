@@ -10,7 +10,10 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
 
   ## ETL
   A ETL segue o seguinte diagrama:
+  
     ![Diagram](https://github.com/emiliodallas/CryptoLake/blob/master/ETL_diagram.png)
+    
+    
   
   ## Documentação API
   O limite de requests para a API com uma conta no plano Basic (gratuito) é de 10.000 coins/mês. Cada coin equivale à um request GET, por exemplo. Por essa limitação, escolhi coletar os dados de três criptomoedas:
@@ -23,21 +26,21 @@ O projeto consistiu em desenvolver uma pipeline de ETL para extrair dados da API
 
   ## Armazenamento e Modelagem de Dados
   Os dados, segregados em _bronze_ e _silver_ (conforme tratamento) foram armazenados num bucket no Cloud Storage. Os dados _silver_ são, então, carregados para o BigQuery devidamente tratados e organizados em suas tabelas. A estrutura dos diretórios dentro do bucket é:
-  - crypto-cap-market/
-    - bronze/
-      - Bitcoin/
-        - ...
-      - Ethereum/
-        - ...
-      - Tether/
-        - ...
-    - silver/
-      - Bitcoin/
-        - ...
-      - Ethereum/
-        - ...
-      - Tether/
-        - ...
+    - crypto-cap-market/
+      - bronze/
+        - Bitcoin/
+          - ...
+        - Ethereum/
+          - ...
+        - Tether/
+          - ...
+      - silver/
+        - Bitcoin/
+          - ...
+        - Ethereum/
+          - ...
+        - Tether/
+          - ...
    Cada arquivo recebe o nome no formato ```data_YYYY_MM_DD-HH-MM-SS.json``` para que todos tenham nomes únicos e que sejam facilmente acessados. Isso vale tanto para os dados na pasta _bronze_ quanto na pasta _silver_
 
   ## Cloud Functions
