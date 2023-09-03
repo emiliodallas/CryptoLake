@@ -1,4 +1,4 @@
-from create_tables_class import create_table
+from bigquery_tables.create_tables import create_table
 from google.cloud import bigquery
 
 def create_tables():

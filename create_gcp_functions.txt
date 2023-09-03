@@ -1,6 +1,6 @@
 // Utilize esse comando para fazer deploy da primeira função
 // queextrai dados da API e então os carrega no Cloud Stograge
-gcloud functions deploy extract_api_load_storage \
+  gcloud functions deploy extract_api_load_storage \
   --runtime python310 \
   --trigger-http \
   --entry-point caller \

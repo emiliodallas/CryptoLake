@@ -1,5 +1,6 @@
-from date_time import get_current_time
 from authenticate_cloud_storage import authenticate_cloud_storage
+from date_time import get_current_time
+from error_handling import errors
 import requests
 import json
 import os
@@ -22,14 +23,22 @@ class CryptomarketPipeline():
             'id': id
         }
         return headers, parameters
-
+    
     def get_crypto_info_by_ids(self, id):
         url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest'
         headers, parameters = self.create_api_request_params(id)
+        
+        try:
+            response = requests.get(url, headers=headers, params=parameters)
+            response.raise_for_status()  
+            errors(response.status_code)
+            
+            return response.json()
+        
+        except requests.exceptions.RequestException as e:
+            print(f"Error while making API request: {e}")
 
-        response = requests.get(url, headers=headers, params=parameters)
-
-        return response.json()
+            return None  
 
     def store_data_in_cloud_storage(self, data, coin_name, data_stage):
         client, bucket =  authenticate_cloud_storage(self.project_id,
@@ -44,16 +53,19 @@ class CryptomarketPipeline():
         blob.upload_from_string(data_json)
 
     def extract_api_data(self):
-        [  
-        self.store_data_in_cloud_storage(
-            data=self.get_crypto_info_by_ids(id),
-            coin_name=coin_name,
-            data_stage='bronze'
-        )
-        for id, coin_name in zip(crypto_ids, coin_names)
-        ]
-        success = {"Data Added and Extracted"}
-        return success
+        try:
+            [  
+            self.store_data_in_cloud_storage(
+                data=self.get_crypto_info_by_ids(id),
+                coin_name=coin_name,
+                data_stage='bronze'
+            )
+            for id, coin_name in zip(crypto_ids, coin_names)
+            ]
+
+        except:
+            print("Check Raised Exception For Error")
+            return None
 
 crypto_ids = [1, 1027, 825]
 coin_names = ['Bitcoin', 'Ethereum', 'Tether']

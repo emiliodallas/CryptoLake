@@ -21,7 +21,7 @@ class TransformCrypto():
         json_data, _ = authenticate_cloud_storage(project_id=self.project_id,
                                                 bucket_name=self.bucket_name,
                                                 file_path=file_path)
-
+        
         stage, coin_name, _ = file_path.split('/', 2)
 
         if stage == 'bronze':
